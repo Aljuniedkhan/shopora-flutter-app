@@ -123,8 +123,8 @@ class ProductRemoteDataSource {
         queryParameters: {
           'limit': AppConstants.pageSize,
           'skip': skip,
-          if (sortBy != null) 'sortBy': sortBy,
-          if (order != null) 'order': order,
+          'sortBy': ?sortBy, // added only when not null
+          'order': ?order,
           ...extra,
         },
       );
