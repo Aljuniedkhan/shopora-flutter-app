@@ -20,8 +20,8 @@ class ErrorView extends StatelessWidget {
     super.key,
     required this.onRetry,
     this.message = 'Please check your Wi-Fi or mobile data and try again.',
-  })  : title = 'No internet connection',
-        icon = Icons.wifi_off_rounded;
+  }) : title = 'No internet connection',
+       icon = Icons.wifi_off_rounded;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +43,17 @@ class ErrorView extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(color: colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 24),
             FilledButton.icon(

@@ -22,11 +22,11 @@ class Review {
   }
 
   Map<String, dynamic> toJson() => {
-        'rating': rating,
-        'comment': comment,
-        'reviewerName': reviewerName,
-        'date': date,
-      };
+    'rating': rating,
+    'comment': comment,
+    'reviewerName': reviewerName,
+    'date': date,
+  };
 }
 
 /// A product from the DummyJSON API (or one created locally).
@@ -69,8 +69,9 @@ class Product {
   String get subtitle => brand.isNotEmpty ? brand : category;
 
   /// Picture shown in lists. Falls back to the first gallery image.
-  String get mainImage =>
-      thumbnail.isNotEmpty ? thumbnail : (images.isNotEmpty ? images.first : '');
+  String get mainImage => thumbnail.isNotEmpty
+      ? thumbnail
+      : (images.isNotEmpty ? images.first : '');
 
   /// Images for the detail gallery, never empty if any picture exists.
   List<String> get galleryImages {
@@ -87,8 +88,7 @@ class Product {
       description: json['description'] as String? ?? '',
       category: json['category'] as String? ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0,
-      discountPercentage:
-          (json['discountPercentage'] as num?)?.toDouble() ?? 0,
+      discountPercentage: (json['discountPercentage'] as num?)?.toDouble() ?? 0,
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       stock: (json['stock'] as num?)?.toInt() ?? 0,
       brand: json['brand'] as String? ?? '',
@@ -102,29 +102,29 @@ class Product {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'category': category,
-        'price': price,
-        'discountPercentage': discountPercentage,
-        'rating': rating,
-        'stock': stock,
-        'brand': brand,
-        'thumbnail': thumbnail,
-        'images': images,
-        'tags': tags,
-        'reviews': reviews.map((r) => r.toJson()).toList(),
-      };
+    'id': id,
+    'title': title,
+    'description': description,
+    'category': category,
+    'price': price,
+    'discountPercentage': discountPercentage,
+    'rating': rating,
+    'stock': stock,
+    'brand': brand,
+    'thumbnail': thumbnail,
+    'images': images,
+    'tags': tags,
+    'reviews': reviews.map((r) => r.toJson()).toList(),
+  };
 
   /// Only the fields our Add/Edit form changes (sent to POST/PUT).
   Map<String, dynamic> toRequestBody() => {
-        'title': title,
-        'description': description,
-        'price': price,
-        'category': category,
-        'thumbnail': thumbnail,
-      };
+    'title': title,
+    'description': description,
+    'price': price,
+    'category': category,
+    'thumbnail': thumbnail,
+  };
 
   Product copyWith({
     int? id,

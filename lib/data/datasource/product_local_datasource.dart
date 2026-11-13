@@ -17,8 +17,13 @@ class ProductLocalDataSource {
   late final Box _settingsBox; // dark mode, cached categories
 
   /// Opens every box. Must be called once before the app starts.
-  Future<void> init() async {
-    await Hive.initFlutter();
+  /// [testPath] is only used by tests, which have no app folder.
+  Future<void> init({String? testPath}) async {
+    if (testPath != null) {
+      Hive.init(testPath);
+    } else {
+      await Hive.initFlutter();
+    }
     _cacheBox = await Hive.openBox(AppConstants.productsCacheBox);
     _addedBox = await Hive.openBox(AppConstants.addedProductsBox);
     _editedBox = await Hive.openBox(AppConstants.editedProductsBox);
@@ -42,7 +47,8 @@ class ProductLocalDataSource {
       _settingsBox.put(AppConstants.categoriesKey, categories);
 
   List<String> getCachedCategories() => List<String>.from(
-      _settingsBox.get(AppConstants.categoriesKey, defaultValue: const []));
+    _settingsBox.get(AppConstants.categoriesKey, defaultValue: const []),
+  );
 
   // ---------- Local changes (added / edited / deleted) ----------
 

@@ -13,8 +13,11 @@ class OfflineBanner extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
           children: [
-            Icon(Icons.wifi_off_rounded,
-                size: 18, color: colorScheme.onTertiaryContainer),
+            Icon(
+              Icons.wifi_off_rounded,
+              size: 18,
+              color: colorScheme.onTertiaryContainer,
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Text(

@@ -32,8 +32,10 @@ class AppUtils {
     if (slug.isEmpty) return slug;
     return slug
         .split('-')
-        .map((word) =>
-            word.isEmpty ? word : word[0].toUpperCase() + word.substring(1))
+        .map(
+          (word) =>
+              word.isEmpty ? word : word[0].toUpperCase() + word.substring(1),
+        )
         .join(' ');
   }
 

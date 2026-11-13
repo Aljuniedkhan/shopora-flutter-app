@@ -21,9 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _goToHome() async {
     await Future.delayed(AppConstants.splashDuration);
     if (!mounted) return; // the screen may already be closed
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 
   @override

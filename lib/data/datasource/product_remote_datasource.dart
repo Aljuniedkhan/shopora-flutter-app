@@ -9,16 +9,17 @@ class ProductRemoteDataSource {
   final Dio _dio;
 
   ProductRemoteDataSource({Dio? dio})
-      : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: AppConstants.baseUrl,
-                connectTimeout: AppConstants.connectTimeout,
-                receiveTimeout: AppConstants.receiveTimeout,
-                sendTimeout: AppConstants.receiveTimeout,
-                headers: {'Content-Type': 'application/json'},
-              ),
-            );
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: AppConstants.baseUrl,
+              connectTimeout: AppConstants.connectTimeout,
+              receiveTimeout: AppConstants.receiveTimeout,
+              sendTimeout: AppConstants.receiveTimeout,
+              headers: {'Content-Type': 'application/json'},
+            ),
+          );
 
   /// GET /products?limit=10&skip=n
   Future<ProductPage> fetchProducts({
@@ -83,8 +84,10 @@ class ProductRemoteDataSource {
   /// POST /products/add (DummyJSON only simulates it, nothing is saved).
   Future<Product> addProduct(Product product) async {
     try {
-      final response =
-          await _dio.post('/products/add', data: product.toRequestBody());
+      final response = await _dio.post(
+        '/products/add',
+        data: product.toRequestBody(),
+      );
       return Product.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       throw _toAppException(e);

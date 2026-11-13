@@ -31,13 +31,24 @@ class ProductRepository {
     final ProductPage page;
     if (query.isNotEmpty) {
       page = await _remote.searchProducts(
-          query: query, skip: skip, sortBy: sortBy, order: order);
+        query: query,
+        skip: skip,
+        sortBy: sortBy,
+        order: order,
+      );
     } else if (category != null) {
       page = await _remote.fetchByCategory(
-          category: category, skip: skip, sortBy: sortBy, order: order);
+        category: category,
+        skip: skip,
+        sortBy: sortBy,
+        order: order,
+      );
     } else {
       page = await _remote.fetchProducts(
-          skip: skip, sortBy: sortBy, order: order);
+        skip: skip,
+        sortBy: sortBy,
+        order: order,
+      );
     }
 
     await _local.cacheProducts(page.products);

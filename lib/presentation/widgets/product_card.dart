@@ -89,8 +89,9 @@ class ProductCard extends StatelessWidget {
           product.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style:
-              theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 2),
         Row(
@@ -100,8 +101,9 @@ class ProductCard extends StatelessWidget {
                 AppUtils.prettify(product.subtitle),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.labelMedium
-                    ?.copyWith(color: colorScheme.primary),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: colorScheme.primary,
+                ),
               ),
             ),
             if (product.isLocal) ...[
@@ -115,8 +117,9 @@ class ProductCard extends StatelessWidget {
           product.description,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: theme.textTheme.bodySmall
-              ?.copyWith(color: colorScheme.onSurfaceVariant),
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
         if (isGrid) const Spacer() else const SizedBox(height: 8),
         Row(
@@ -147,7 +150,8 @@ class ProductCard extends StatelessWidget {
       visualDensity: VisualDensity.compact,
       style: isGrid
           ? IconButton.styleFrom(
-              backgroundColor: colorScheme.surface.withValues(alpha: 0.85))
+              backgroundColor: colorScheme.surface.withValues(alpha: 0.85),
+            )
           : null,
       tooltip: isFavorite ? 'Remove from favorites' : 'Add to favorites',
       onPressed: onFavoriteTap,
@@ -174,9 +178,7 @@ class _LocalBadge extends StatelessWidget {
       ),
       child: Text(
         'My item',
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
+        style: Theme.of(context).textTheme.labelSmall
             ?.copyWith(color: colorScheme.onTertiaryContainer),
       ),
     );

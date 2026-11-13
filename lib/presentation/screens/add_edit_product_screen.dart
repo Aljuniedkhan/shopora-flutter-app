@@ -93,7 +93,8 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
     final text = value?.trim() ?? '';
     if (text.isEmpty) return null;
     final uri = Uri.tryParse(text);
-    final isWebLink = uri != null &&
+    final isWebLink =
+        uri != null &&
         (uri.scheme == 'http' || uri.scheme == 'https') &&
         uri.host.isNotEmpty;
     return isWebLink ? null : 'Enter a valid http/https image URL';
@@ -153,9 +154,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Product' : 'Add Product'),
-      ),
+      appBar: AppBar(title: Text(_isEditing ? 'Edit Product' : 'Add Product')),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 640),
@@ -193,8 +192,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                 TextFormField(
                   controller: _priceController,
                   textInputAction: TextInputAction.next,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   decoration: const InputDecoration(
                     labelText: 'Price (\$) *',
                     prefixIcon: Icon(Icons.attach_money_rounded),
@@ -226,9 +226,9 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                           height: 20,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : Icon(_isEditing
-                          ? Icons.save_rounded
-                          : Icons.add_rounded),
+                      : Icon(
+                          _isEditing ? Icons.save_rounded : Icons.add_rounded,
+                        ),
                   label: Text(_isEditing ? 'Save Changes' : 'Add Product'),
                 ),
               ],

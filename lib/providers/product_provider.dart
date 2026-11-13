@@ -16,8 +16,9 @@ import '../services/connectivity_service.dart';
 class ProductProvider extends ChangeNotifier {
   final ProductRepository _repository;
   final ConnectivityService _connectivity;
-  final Debouncer _searchDebouncer =
-      Debouncer(delay: AppConstants.searchDebounce);
+  final Debouncer _searchDebouncer = Debouncer(
+    delay: AppConstants.searchDebounce,
+  );
   StreamSubscription<bool>? _connectionSubscription;
 
   ProductProvider(this._repository, this._connectivity) {
@@ -62,8 +63,9 @@ class ProductProvider extends ChangeNotifier {
 
   /// Called once when the app starts.
   Future<void> init() async {
-    _connectionSubscription =
-        _connectivity.onStatusChange.listen(_onConnectionChanged);
+    _connectionSubscription = _connectivity.onStatusChange.listen(
+      _onConnectionChanged,
+    );
     await Future.wait([loadProducts(), loadCategories()]);
   }
 
@@ -156,10 +158,10 @@ class ProductProvider extends ChangeNotifier {
         sort: _sortOption,
       );
       if (requestId != _requestId) return;
-      _products = _repository.sortProducts(
-        [..._products, ...page.products],
-        _sortOption,
-      );
+      _products = _repository.sortProducts([
+        ..._products,
+        ...page.products,
+      ], _sortOption);
       _skip += AppConstants.pageSize;
       _hasMore = _skip < page.total;
     } on AppException catch (e) {
@@ -215,12 +217,12 @@ class ProductProvider extends ChangeNotifier {
   // ---------- Detail & CRUD ----------
   // These methods throw AppException; the screen shows it in a SnackBar.
 
-  Future<Product> getProductDetail(int id) =>
-      _repository.getProductDetail(id);
+  Future<Product> getProductDetail(int id) => _repository.getProductDetail(id);
 
   Future<void> addProduct(Product product) async {
     final saved = await _repository.addProduct(product);
-    final fitsCurrentList = _searchQuery.isEmpty &&
+    final fitsCurrentList =
+        _searchQuery.isEmpty &&
         (_selectedCategory == null || _selectedCategory == saved.category);
     if (fitsCurrentList) {
       _products = _repository.sortProducts([saved, ..._products], _sortOption);
@@ -230,9 +232,7 @@ class ProductProvider extends ChangeNotifier {
 
   Future<Product> updateProduct(Product product) async {
     final updated = await _repository.updateProduct(product);
-    _products = [
-      for (final p in _products) p.id == updated.id ? updated : p,
-    ];
+    _products = [for (final p in _products) p.id == updated.id ? updated : p];
     _favorites = _repository.getFavorites();
     notifyListeners();
     return updated;

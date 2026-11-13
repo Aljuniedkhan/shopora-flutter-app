@@ -31,22 +31,27 @@ class EmptyView extends StatelessWidget {
             CircleAvatar(
               radius: 48,
               backgroundColor: colorScheme.secondaryContainer,
-              child:
-                  Icon(icon, size: 48, color: colorScheme.onSecondaryContainer),
+              child: Icon(
+                icon,
+                size: 48,
+                color: colorScheme.onSecondaryContainer,
+              ),
             ),
             const SizedBox(height: 24),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(color: colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
             if (actionLabel != null && onAction != null) ...[
               const SizedBox(height: 24),

@@ -26,15 +26,14 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     // Load the latest details; the list item is shown meanwhile.
-    _productFuture =
-        context.read<ProductProvider>().getProductDetail(widget.product.id);
+    _productFuture = context.read<ProductProvider>().getProductDetail(
+      widget.product.id,
+    );
   }
 
   Future<void> _edit(Product product) async {
     final updated = await Navigator.of(context).push<Product>(
-      MaterialPageRoute(
-        builder: (_) => AddEditProductScreen(product: product),
-      ),
+      MaterialPageRoute(builder: (_) => AddEditProductScreen(product: product)),
     );
     if (updated != null) {
       setState(() => _productFuture = Future.value(updated));
@@ -116,8 +115,9 @@ class _DetailScreenState extends State<DetailScreen> {
 
   // Uses the FutureBuilder's context so context.select works there.
   Widget _buildAppBar(BuildContext context, Product product) {
-    final isFavorite = context
-        .select<ProductProvider, bool>((p) => p.isFavorite(product.id));
+    final isFavorite = context.select<ProductProvider, bool>(
+      (p) => p.isFavorite(product.id),
+    );
     final images = product.galleryImages;
     final height = AppUtils.isTablet(context) ? 420.0 : 320.0;
 
@@ -239,8 +239,9 @@ class _ProductInfo extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             product.title,
-            style: theme.textTheme.headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -256,8 +257,12 @@ class _ProductInfo extends StatelessWidget {
               ),
               if (hasDiscount) ...[
                 Text(
-                  AppUtils.formatPrice(AppUtils.originalPrice(
-                      product.price, product.discountPercentage)),
+                  AppUtils.formatPrice(
+                    AppUtils.originalPrice(
+                      product.price,
+                      product.discountPercentage,
+                    ),
+                  ),
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     decoration: TextDecoration.lineThrough,
@@ -265,7 +270,8 @@ class _ProductInfo extends StatelessWidget {
                 ),
                 Chip(
                   label: Text(
-                      '-${product.discountPercentage.toStringAsFixed(0)}%'),
+                    '-${product.discountPercentage.toStringAsFixed(0)}%',
+                  ),
                   backgroundColor: colorScheme.errorContainer,
                   labelStyle: TextStyle(color: colorScheme.onErrorContainer),
                   visualDensity: VisualDensity.compact,
@@ -303,7 +309,9 @@ class _ProductInfo extends StatelessWidget {
           const _SectionTitle('Details'),
           _DetailRow(label: 'Brand', value: product.brand),
           _DetailRow(
-              label: 'Category', value: AppUtils.prettify(product.category)),
+            label: 'Category',
+            value: AppUtils.prettify(product.category),
+          ),
           _DetailRow(
             label: 'Discount',
             value: '${product.discountPercentage.toStringAsFixed(2)}%',
@@ -344,9 +352,7 @@ class _SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(top: 24, bottom: 8),
       child: Text(
         text,
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium
+        style: Theme.of(context).textTheme.titleMedium
             ?.copyWith(fontWeight: FontWeight.bold),
       ),
     );
@@ -384,8 +390,9 @@ class _InfoTile extends StatelessWidget {
               value,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(label, style: theme.textTheme.labelSmall),
           ],
@@ -436,8 +443,9 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // API dates look like 2025-04-30T09:41:02.053Z; keep only the day.
-    final date =
-        review.date.length >= 10 ? review.date.substring(0, 10) : review.date;
+    final date = review.date.length >= 10
+        ? review.date.substring(0, 10)
+        : review.date;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -450,17 +458,19 @@ class _ReviewCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 16,
-                  child: Text(review.reviewerName.isEmpty
-                      ? '?'
-                      : review.reviewerName[0]),
+                  child: Text(
+                    review.reviewerName.isEmpty ? '?' : review.reviewerName[0],
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(review.reviewerName,
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        review.reviewerName,
+                        style: theme.textTheme.titleSmall,
+                      ),
                       Text(date, style: theme.textTheme.labelSmall),
                     ],
                   ),

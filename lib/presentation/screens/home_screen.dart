@@ -60,15 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openDetail(Product product) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => DetailScreen(product: product)),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => DetailScreen(product: product)));
   }
 
   void _openAddProduct() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const AddEditProductScreen()),
-    );
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const AddEditProductScreen()));
   }
 
   void _onCategorySelected(String? category) {
@@ -107,11 +106,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   PreferredSizeWidget _buildAppBar() {
-    final favoriteCount =
-        context.select<ProductProvider, int>((p) => p.favorites.length);
+    final favoriteCount = context.select<ProductProvider, int>(
+      (p) => p.favorites.length,
+    );
     final themeProvider = context.watch<ThemeProvider>();
-    final sortOption =
-        context.select<ProductProvider, SortOption>((p) => p.sortOption);
+    final sortOption = context.select<ProductProvider, SortOption>(
+      (p) => p.sortOption,
+    );
 
     return AppBar(
       title: const Text(
@@ -121,9 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
       actions: [
         IconButton(
           tooltip: 'Favorites',
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const FavoritesScreen()),
-          ),
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const FavoritesScreen())),
           icon: Badge(
             isLabelVisible: favoriteCount > 0,
             label: Text('$favoriteCount'),
@@ -152,9 +152,11 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(
           tooltip: themeProvider.isDarkMode ? 'Light mode' : 'Dark mode',
           onPressed: themeProvider.toggleTheme,
-          icon: Icon(themeProvider.isDarkMode
-              ? Icons.light_mode_rounded
-              : Icons.dark_mode_rounded),
+          icon: Icon(
+            themeProvider.isDarkMode
+                ? Icons.light_mode_rounded
+                : Icons.dark_mode_rounded,
+          ),
         ),
       ],
       bottom: PreferredSize(
@@ -240,7 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
       return EmptyView(
         icon: Icons.search_off_rounded,
         title: 'No results',
-        message: 'Nothing matches "${provider.searchQuery}". '
+        message:
+            'Nothing matches "${provider.searchQuery}". '
             'Try another word.',
       );
     }
@@ -315,8 +318,9 @@ class _ListFooter extends StatelessWidget {
     } else if (!provider.hasMore) {
       child = Text(
         'No more products',
-        style: theme.textTheme.bodyMedium
-            ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
       );
     } else {
       child = const SizedBox.shrink();
