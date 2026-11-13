@@ -140,6 +140,8 @@ class ProductProvider extends ChangeNotifier {
   /// Infinite scroll: loads the next page when the user reaches the end.
   Future<void> loadMore() async {
     if (_isLoading || _isLoadingMore || !_hasMore || _isOffline) return;
+    // After a failure, wait for the user to press Retry.
+    if (_loadMoreError != null) return;
 
     final requestId = _requestId;
     _isLoadingMore = true;
@@ -167,6 +169,11 @@ class ProductProvider extends ChangeNotifier {
 
     _isLoadingMore = false;
     notifyListeners();
+  }
+
+  Future<void> retryLoadMore() {
+    _loadMoreError = null;
+    return loadMore();
   }
 
   Future<void> loadCategories() async {

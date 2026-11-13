@@ -40,6 +40,14 @@ class AppUtils {
   static bool isTablet(BuildContext context) =>
       MediaQuery.sizeOf(context).width > AppConstants.tabletBreakpoint;
 
+  /// Columns for the product grid: 1 means a simple list (phones),
+  /// tablets get 3 columns and wide screens 4.
+  static int columnsForWidth(double width) {
+    if (width <= AppConstants.tabletBreakpoint) return 1;
+    if (width <= 900) return 3;
+    return 4;
+  }
+
   static void showSnackBar(
     BuildContext context,
     String message, {
