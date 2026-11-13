@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:shopora/main.dart';
+import 'package:shopora/core/utils.dart';
+import 'package:shopora/data/model/product_model.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Product model', () {
+    test('fromJson and toJson keep the same data', () {
+      final json = {
+        'id': 1,
+        'title': 'Phone',
+        'description': 'A good phone',
+        'category': 'smartphones',
+        'price': 499,
+        'discountPercentage': 10.5,
+        'rating': 4.2,
+        'stock': 7,
+        'brand': 'Apple',
+        'thumbnail': 'https://example.com/t.png',
+        'images': ['https://example.com/1.png'],
+        'tags': ['phone'],
+        'reviews': [
+          {'rating': 5, 'comment': 'Great', 'reviewerName': 'A', 'date': ''},
+        ],
+      };
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      final product = Product.fromJson(json);
+      expect(product.price, 499.0);
+      expect(product.reviews.first.comment, 'Great');
+      expect(Product.fromJson(product.toJson()).title, 'Phone');
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('negative id means a locally created product', () {
+      const product = Product(
+        id: -123,
+        title: 'Mine',
+        description: 'Created in the app',
+        category: 'beauty',
+        price: 5,
+      );
+      expect(product.isLocal, isTrue);
+      expect(product.subtitle, 'beauty');
+    });
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('prettify turns a slug into words', () {
+    expect(AppUtils.prettify('home-decoration'), 'Home Decoration');
   });
 }
